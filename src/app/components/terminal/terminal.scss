@@ -1,0 +1,170 @@
+
+/* Terminal container */
+.terminal-container {
+    width: 100%;
+    height: 100vh;
+    background: #0d1117;
+    border: 2px solid #21262d;
+    border-radius: 8px;
+    box-shadow:
+        0 0 50px rgba(0, 255, 65, 0.1),
+        inset 0 0 100px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Terminal header */
+.terminal-header {
+    background: linear-gradient(90deg, #21262d, #30363d);
+    padding: 12px 20px;
+    border-bottom: 1px solid #21262d;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.terminal-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.terminal-button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.close { background: #ff5f56; }
+.minimize { background: #ffbd2e; }
+.maximize { background: #27ca3f; }
+
+.terminal-title {
+    margin-left: 20px;
+    color: #8b949e;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* Terminal body scroll */
+.terminal-body {
+    flex: 1;
+    padding: 20px;
+    background: #0d1117;
+    overflow-y: auto;
+    position: relative;
+}
+
+.terminal-body::-webkit-scrollbar {
+    width: 8px;
+}
+.terminal-body::-webkit-scrollbar-track {
+    background: #21262d;
+}
+.terminal-body::-webkit-scrollbar-thumb {
+    background: #30363d;
+    border-radius: 4px;
+}
+
+/* Terminal lines */
+.line {
+    margin-bottom: 8px;
+    font-size: 14px;
+    line-height: 1.5;
+    animation: fadeInUp 0.3s ease-out forwards;
+}
+
+/* Terminal colors */
+.prompt { color: #58a6ff; font-weight: 600; }
+.command { color: #7ee787; font-weight: 600; }
+.comment { color: #8b949e; }
+.success { color: #7ee787; }
+.warning { color: #f0883e; }
+.error { color: #f85149; }
+.highlight { color: #ff7b72; font-weight: 600; }
+.tech-stack { color: #ffa657; }
+.project-name { color: #58a6ff; font-weight: 700; }
+.achievement { color: #d2a8ff; }
+
+/* Input */
+.input-line {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.terminal-input {
+    background: transparent;
+    border: none;
+    color: #00ff41;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    outline: none;
+    flex: 1;
+    margin-left: 8px;
+}
+
+.cursor {
+    display: inline-block;
+    background: #00ff41;
+    width: 10px;
+    height: 20px;
+    animation: blink 1s infinite;
+    margin-left: 2px;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Skill bars */
+.skill-bar {
+    display: inline-block;
+    background: #21262d;
+    width: 200px;
+    height: 4px;
+    border-radius: 2px;
+    margin-left: 10px;
+    overflow: hidden;
+}
+
+.skill-progress {
+    height: 100%;
+    background: linear-gradient(90deg, #00ff41, #7ee787);
+    border-radius: 2px;
+    width: 0;
+    animation: loadProgress 1.5s ease-out forwards;
+}
+
+@keyframes loadProgress {
+    to { width: var(--progress-width); }
+}
+
+/* GitHub stats */
+.github-stats {
+    display: inline-block;
+    color: #7ee787;
+    background: rgba(126, 231, 135, 0.1);
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin: 0 4px;
+}
+
+/* Typing animation */
+.typing { position: relative; }
+.typing::after {
+    content: '';
+    animation: dots 1.5s infinite;
+}
+
+@keyframes dots {
+    0%, 20% { content: ''; }
+    40% { content: '.'; }
+    60% { content: '..'; }
+    80%, 100% { content: '...'; }
+}

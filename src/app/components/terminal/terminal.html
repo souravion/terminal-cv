@@ -1,0 +1,40 @@
+<div class="terminal-container">
+  <div class="terminal-header">
+    <div class="terminal-buttons">
+      <div class="terminal-button close"></div>
+      <div class="terminal-button minimize"></div>
+      <div class="terminal-button maximize"></div>
+    </div>
+    <div class="terminal-title">senior-software-engineer@portfolio:~</div>
+  </div>
+
+  <div class="terminal-body" #terminalBody>
+    @for (output of terminalHistory; track $index) {
+    <div class="line">
+      <div [innerHTML]="output"></div>
+    </div>
+  }
+  @if(!isTyping){
+    <div class="input-line">
+      <span class="prompt">sourav@portfolio:~$</span>
+      <input
+        #terminalInput
+        class="terminal-input"
+        [(ngModel)]="currentCommand"
+        (keydown)="onKeyDown($event)"
+        autocomplete="off"
+        spellcheck="false"
+      />
+      <span class="cursor"></span>
+    </div>
+}
+@if(isTyping){
+    <div class="input-line">
+      <span class="prompt">sourav@portfolio:~$</span>
+      <span class="command">{{ currentCommand }}</span>
+      <span class="typing"></span>
+    </div>
+  }
+  </div>
+
+</div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Renderer2, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Renderer2, AfterViewInit, NgZone } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   whoamiData,
@@ -25,14 +25,22 @@ export class Terminal implements OnInit, AfterViewInit {
   // Stores all previous terminal outputs and commands
   terminalHistory: string[] = [];
 
+  // Keep the welcome messages separate
+  initialMessages: string[] = [
+    `<span class="success">Welcome to Sr.Software Engineer Terminal v2.1.0</span>`,
+    `<span class="comment">Type 'help' to see available commands.</span>`,
+    ''
+  ];
+
   // Flag to indicate if the terminal is currently "typing" output (used for animation)
   isTyping = false;
+
 
   // References to DOM elements using Angular ViewChild
   @ViewChild('terminalInput') terminalInput!: ElementRef<HTMLInputElement>;
   @ViewChild('terminalBody') terminalBody!: ElementRef<HTMLDivElement>;
 
-  constructor(private renderer: Renderer2) {}
+  constructor(private renderer: Renderer2, private ngZone: NgZone) {}
 
   /**
    * Angular lifecycle hook - ngOnInit
@@ -58,10 +66,13 @@ export class Terminal implements OnInit, AfterViewInit {
    * Focuses the terminal input field
    */
   private focusInput() {
-    if (this.terminalInput?.nativeElement) {
-      this.terminalInput.nativeElement.focus();
-    }
-  }
+  this.ngZone.runOutsideAngular(() => {
+    setTimeout(() => {
+      this.terminalInput?.nativeElement?.focus();
+    }, 0);
+  });
+}
+
 
   /**
    * Scrolls the terminal body to the bottom to show the latest output
@@ -126,6 +137,8 @@ export class Terminal implements OnInit, AfterViewInit {
       this.scrollToBottom();
     }
   }
+
+
 
   /**
    * Object storing all available terminal commands and their implementations
@@ -228,8 +241,9 @@ export class Terminal implements OnInit, AfterViewInit {
 
     // 'clear' command clears the terminal screen
     clear: () => {
-      this.terminalHistory = [];
+      this.terminalHistory = [...this.initialMessages]; // keep welcome text
       return [];
-    },
+},
+
   };
 }
